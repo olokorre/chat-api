@@ -1,4 +1,4 @@
-import 'package:chat_dart/domain/user.dart';
+import 'package:chat_dart/domain/entity/user.dart';
 import 'package:test/test.dart';
 
 void main() {

@@ -1,6 +1,6 @@
 import 'package:chat_dart/domain/exeption/user_not_participant.dart';
-import 'package:chat_dart/domain/message.dart';
-import 'package:chat_dart/domain/user.dart';
+import 'package:chat_dart/domain/entity/message.dart';
+import 'package:chat_dart/domain/entity/user.dart';
 
 class Chat {
   final List<User> _participants;

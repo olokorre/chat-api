@@ -1,4 +1,4 @@
-import 'package:chat_dart/domain/message.dart';
+import 'package:chat_dart/domain/entity/message.dart';
 import 'package:test/test.dart';
 
 void main() {

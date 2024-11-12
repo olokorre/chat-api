@@ -1,6 +1,6 @@
-import 'package:chat_dart/domain/chat.dart';
+import 'package:chat_dart/domain/entity/chat.dart';
 import 'package:chat_dart/domain/exeption/user_not_participant.dart';
-import 'package:chat_dart/domain/user.dart';
+import 'package:chat_dart/domain/entity/user.dart';
 import 'package:test/test.dart';
 
 void main() {
