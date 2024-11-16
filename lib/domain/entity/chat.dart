@@ -1,4 +1,5 @@
 import 'package:chat_dart/domain/exeption/user_already_particips.dart';
+import 'package:chat_dart/domain/exeption/user_not_mesage_owner.dart';
 import 'package:chat_dart/domain/exeption/user_not_participant.dart';
 import 'package:chat_dart/domain/entity/message.dart';
 import 'package:chat_dart/domain/entity/user.dart';
@@ -53,5 +54,14 @@ class Chat {
       throw UserNotParticipant(user.id);
     }
     _participants.remove(user);
+  }
+
+  void editMessage(
+      int messageId, String newContent, DateTime editedAt, User user) {
+    final message = _messages.firstWhere((test) => test.id == messageId);
+    if (message.userId != user.id) {
+      throw UserNotMesageOwner();
+    }
+    message.edit(newContent, editedAt);
   }
 }

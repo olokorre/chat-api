@@ -36,4 +36,20 @@ void main() {
     final message = Message(1, 'content', dateTime, 1, type: MessageType.image);
     expect(message.type, MessageType.image);
   });
+
+  test("Deve permitir a edição do coteúdo de uma mensagem", () {
+    final dateTime = DateTime.parse('2024-04-01 10:00:00');
+    final message = Message(1, 'Olá, idiota!', dateTime, 1);
+    final editedAt = DateTime.parse('2024-04-01 10:05:00');
+    message.edit('Olá, amigo!', editedAt);
+    expect(message.content, 'Olá, amigo!');
+  });
+
+  test("Deve preservar o momento da edição", () {
+    final dateTime = DateTime.parse('2024-04-01 10:00:00');
+    final editedAt = DateTime.parse('2024-04-01 10:05:00');
+    final message = Message(1, 'Olá, idiota!', dateTime, 1);
+    message.edit('Olá, amigo!', editedAt);
+    expect(message.editedAt, editedAt);
+  });
 }

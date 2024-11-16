@@ -1,5 +1,6 @@
 import 'package:chat_dart/domain/entity/chat.dart';
 import 'package:chat_dart/domain/exeption/user_already_particips.dart';
+import 'package:chat_dart/domain/exeption/user_not_mesage_owner.dart';
 import 'package:chat_dart/domain/exeption/user_not_participant.dart';
 import 'package:chat_dart/domain/entity/user.dart';
 import 'package:test/test.dart';
@@ -72,4 +73,30 @@ void main() {
           throwsA(isA<UserNotParticipant>()));
     },
   );
+
+  test("Deve permitir a edição de uma mensagem", () {
+    const user1 = User(1, 'Samira');
+    const user2 = User(2, 'Carlos');
+    final chat = Chat([user1, user2]);
+    final dateTime = DateTime.parse('2024-01-01T10:00:00');
+    final editedAt = DateTime.parse('2024-01-01T10:05:00');
+    chat.add('Olá, idiota!', dateTime, user1);
+    chat.editMessage(1, 'Olá, amigo!', editedAt, user1);
+    final [message] = chat.messages;
+    expect(message.content, 'Olá, amigo!');
+    expect(message.editedAt, editedAt);
+  });
+
+  test("Só deve permitir a edição da mesagem pelo usuário que a criou", () {
+    const user1 = User(1, 'Samira');
+    const user2 = User(2, 'Carlos');
+    final chat = Chat([user1, user2]);
+    final dateTime = DateTime.parse('2024-01-01T10:00:00');
+    final editedAt = DateTime.parse('2024-01-01T10:05:00');
+    chat.add('Olá, idiota!', dateTime, user1);
+    expect(
+      () => chat.editMessage(1, 'Olá, amigo!', editedAt, user2),
+      throwsA(isA<UserNotMesageOwner>()),
+    );
+  });
 }
