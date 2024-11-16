@@ -8,11 +8,13 @@ import 'package:chat_dart/domain/entity/user.dart';
 class Chat {
   final List<User> _participants;
   late final List<Message> _messages;
-  Chat(this._participants, {List<Message>? messages}) {
+  late final int id;
+  Chat(this._participants, {List<Message>? messages, int? id}) {
     if (_participants.length < 2) {
       throw FewParticipants();
     }
     _messages = messages ?? [];
+    this.id = id ?? 1;
   }
 
   List<User> get participants {
