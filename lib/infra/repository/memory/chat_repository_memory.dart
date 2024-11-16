@@ -11,6 +11,12 @@ class ChatRepositoryMemory implements ChatRepository {
 
   @override
   Future<void> save(Chat chat) async {
-    _chats.add(chat);
+    final index =
+        _chats.indexWhere((existingChat) => existingChat.id == chat.id);
+    if (index != -1) {
+      _chats[index] = chat;
+    } else {
+      _chats.add(chat);
+    }
   }
 }
