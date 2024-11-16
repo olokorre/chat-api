@@ -1,4 +1,5 @@
 import 'package:chat_dart/domain/entity/chat.dart';
+import 'package:chat_dart/domain/exeption/few_participants.dart';
 import 'package:chat_dart/domain/exeption/user_already_particips.dart';
 import 'package:chat_dart/domain/exeption/user_not_mesage_owner.dart';
 import 'package:chat_dart/domain/exeption/user_not_participant.dart';
@@ -99,4 +100,22 @@ void main() {
       throwsA(isA<UserNotMesageOwner>()),
     );
   });
+
+  test("Não deve permitir a criação de um chat com apenas um usuário", () {
+    final user = User(1, 'Enzo Gabriel');
+    expect(() => Chat([user]), throwsA(isA<FewParticipants>()));
+  });
+
+  test(
+    "Não deve permitir a remoção de um usuário caso o chat fique com menos de 2 participantes",
+    () {
+      final user1 = User(1, 'Enzo Gabriel');
+      final user2 = User(2, 'Carlos Antônio');
+      final chat = Chat([user1, user2]);
+      expect(
+        () => chat.removeParticipant(user2),
+        throwsA(isA<FewParticipants>()),
+      );
+    },
+  );
 }

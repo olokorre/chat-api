@@ -1,3 +1,4 @@
+import 'package:chat_dart/domain/exeption/few_participants.dart';
 import 'package:chat_dart/domain/exeption/user_already_particips.dart';
 import 'package:chat_dart/domain/exeption/user_not_mesage_owner.dart';
 import 'package:chat_dart/domain/exeption/user_not_participant.dart';
@@ -8,6 +9,9 @@ class Chat {
   final List<User> _participants;
   late final List<Message> _messages;
   Chat(this._participants, {List<Message>? messages}) {
+    if (_participants.length < 2) {
+      throw FewParticipants();
+    }
     _messages = messages ?? [];
   }
 
@@ -52,6 +56,9 @@ class Chat {
     final result = _findUserById(user.id);
     if (result == null) {
       throw UserNotParticipant(user.id);
+    }
+    if (_participants.length - 1 < 2) {
+      throw FewParticipants();
     }
     _participants.remove(user);
   }
