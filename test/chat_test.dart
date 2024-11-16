@@ -1,4 +1,5 @@
 import 'package:chat_dart/domain/entity/chat.dart';
+import 'package:chat_dart/domain/exeption/user_already_particips.dart';
 import 'package:chat_dart/domain/exeption/user_not_participant.dart';
 import 'package:chat_dart/domain/entity/user.dart';
 import 'package:test/test.dart';
@@ -31,6 +32,44 @@ void main() {
         () => chat.add('Cavalo', DateTime.parse('2024-01-01T10:00:00'), user3),
         throwsA(isA<UserNotParticipant>()),
       );
+    },
+  );
+
+  test("Deve adicionar participantes ha um chat", () {
+    const user1 = User(1, 'Samira');
+    const user2 = User(2, 'Carlos');
+    const user3 = User(3, 'Jose');
+    final chat = Chat([user1, user2]);
+    chat.addParticipant(user3);
+    expect(chat.participants.length, 3);
+  });
+
+  test("Não deve adicionar duas o mesmo participante ao chat", () {
+    const user1 = User(1, 'Samira');
+    const user2 = User(2, 'Carlos');
+    final chat = Chat([user1, user2]);
+    expect(
+        () => chat.addParticipant(user2), throwsA(isA<UserAlreadyParticips>()));
+  });
+
+  test("Deve remover um usuário do chat", () {
+    const user1 = User(1, 'Samira');
+    const user2 = User(2, 'Carlos');
+    const user3 = User(3, 'Jose');
+    final chat = Chat([user1, user2, user3]);
+    chat.removeParticipant(user3);
+    expect(chat.participants.length, 2);
+  });
+
+  test(
+    "Deve retornar um erro ao tentar remover um usuário que não participa do chat",
+    () {
+      const user1 = User(1, 'Samira');
+      const user2 = User(2, 'Carlos');
+      const user3 = User(3, 'Jose');
+      final chat = Chat([user1, user2]);
+      expect(() => chat.removeParticipant(user3),
+          throwsA(isA<UserNotParticipant>()));
     },
   );
 }

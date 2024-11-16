@@ -1,3 +1,4 @@
+import 'package:chat_dart/domain/exeption/user_already_particips.dart';
 import 'package:chat_dart/domain/exeption/user_not_participant.dart';
 import 'package:chat_dart/domain/entity/message.dart';
 import 'package:chat_dart/domain/entity/user.dart';
@@ -17,10 +18,17 @@ class Chat {
     return _messages.toList();
   }
 
-  void add(String content, DateTime dateTime, User user) {
+  User? _findUserById(int userId) {
     try {
-      _participants.firstWhere((test) => test.id == user.id);
+      return _participants.firstWhere((test) => test.id == userId);
     } on StateError {
+      return null;
+    }
+  }
+
+  void add(String content, DateTime dateTime, User user) {
+    final result = _findUserById(user.id);
+    if (result == null) {
       throw UserNotParticipant(user.id);
     }
     _messages.add(Message(
@@ -29,5 +37,21 @@ class Chat {
       dateTime,
       user.id,
     ));
+  }
+
+  void addParticipant(User user) {
+    final result = _findUserById(user.id);
+    if (result != null) {
+      throw UserAlreadyParticips();
+    }
+    _participants.add(user);
+  }
+
+  void removeParticipant(User user) {
+    final result = _findUserById(user.id);
+    if (result == null) {
+      throw UserNotParticipant(user.id);
+    }
+    _participants.remove(user);
   }
 }
