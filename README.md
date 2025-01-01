@@ -39,6 +39,8 @@ Para instalar e configurar o projeto, siga os passos abaixo:
      dart pub get
      ```
 
+     Para mais informações sobre como instalar o Dart SDK, consulte a [documentação oficial do Dart](https://dart.dev/get-dart).
+
 ## Executando os Testes
 
 Para rodar os testes, utilize o comando:
@@ -73,3 +75,5 @@ Se você deseja contribuir com este projeto, por favor, siga os passos abaixo:
      ```
 
 5. Abra um Pull Request.
+
+Para mais informações sobre Dart, consulte a [documentação oficial do Dart](https://dart.dev/guides).
