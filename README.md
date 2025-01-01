@@ -27,8 +27,8 @@ Para instalar e configurar o projeto, siga os passos abaixo:
 1. **Clone o repositório:**
 
      ```sh
-     git clone https://github.com/seu-usuario/chat_dart.git
-     cd chat_dart
+     git clone https://github.com/olokorre/chat-api.git
+     cd chat-dart
      ```
 
 2. **Instale as dependências:**
