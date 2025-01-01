@@ -26,4 +26,9 @@ class UserRepositoryMemory implements UserRepository {
     }
     _users.add(user);
   }
+
+  @override
+  Future<int> getNextId() async {
+    return _users.length + 1;
+  }
 }

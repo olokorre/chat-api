@@ -22,4 +22,20 @@ void main() {
       throwsA(isA<UserAlredyExists>()),
     );
   });
+
+  test("Deve retornar o proximo id dos usuarios", () async {
+    final userRepository = UserRepositoryMemory();
+    final output = await userRepository.getNextId();
+    expect(output, 1);
+  });
+
+  test('Deve retornar o proximo id depois de acressentar alguns usários',
+      () async {
+    final userRepository = UserRepositoryMemory();
+    await userRepository.save(User(1, 'Enzo Gabriel'));
+    await userRepository.save(User(2, 'Enzo Gabriel'));
+    await userRepository.save(User(3, 'Enzo Gabriel'));
+    final output = await userRepository.getNextId();
+    expect(output, 4);
+  });
 }
